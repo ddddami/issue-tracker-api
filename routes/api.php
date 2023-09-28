@@ -16,12 +16,15 @@ use App\Http\Controllers\IssueController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-// Route::get('/issues', [IssueController::class, 'index']);
 Route::apiResource('/issues', IssueController::class);
 
 // Authentication routes
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
