@@ -10,4 +10,9 @@ class Issue extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'description', 'status'];
+
+    public function assignedTo()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
+    }
 }
