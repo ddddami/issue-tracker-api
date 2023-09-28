@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IssueController;
 
 /*
@@ -21,3 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Route::get('/issues', [IssueController::class, 'index']);
 Route::apiResource('/issues', IssueController::class);
+
+// Authentication routes
+Route::post('/register', [AuthController::class, 'register']);
