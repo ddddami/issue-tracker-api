@@ -67,6 +67,15 @@ class IssueController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            // throws an error (not a nice message to the client) if find fails
+            $issue = Issue::findOrFail($id);
+        } catch (ModelNotFoundException $ex) {
+            return response()->json(['message' => 'Issue has been deleted already'], Response::HTTP_NOT_FOUND);
+        }
+        // destroy -> present on class, delete -> present on instance
+        $issue->delete();
+        return response()->json([], Response::HTTP_NO_CONTENT);
+
     }
 }
