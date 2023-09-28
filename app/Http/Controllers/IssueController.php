@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Models\Issue;
+use Illuminate\Http\Response;
 
 class IssueController extends Controller
 {
@@ -29,7 +31,13 @@ class IssueController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+
+            $issue = Issue::findOrFail($id);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json(['message' => 'Expense not found'], Response::HTTP_NOT_FOUND);
+        }
+        return $issue;
     }
 
     /**
