@@ -23,7 +23,9 @@ class IssueController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = request()->validate(['title' => 'required|string', 'description' => 'required|string']);
+        return Issue::create($data, Response::HTTP_CREATED);
+
     }
 
     /**
@@ -45,7 +47,19 @@ class IssueController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = request()->validate(['title' => 'required|string', 'description' => 'required|string']);
+        try {
+
+            $issue = Issue::findOrFail($id);
+
+        } catch (ModelNotFoundException $ex) {
+            return response()->json([
+                'message' => 'The issue was not found'
+            ], Response::HTTP_NOT_FOUND);
+        }
+        $issue->update($validatedData);
+        return $issue;
+
     }
 
     /**
