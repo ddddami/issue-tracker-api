@@ -47,7 +47,7 @@ class IssueController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validatedData = request()->validate(['title' => 'required|string', 'description' => 'required|string']);
+        $validatedData = request()->validate(['title' => 'string', 'description' => 'string']);
         try {
 
             $issue = Issue::findOrFail($id);
